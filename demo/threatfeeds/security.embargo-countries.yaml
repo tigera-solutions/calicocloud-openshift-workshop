@@ -1,0 +1,15 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: security.embargo-countries
+spec:
+  tier: security
+  order: 230
+  selector: all()
+  types:
+  - Egress
+  egress:
+  - action: Deny
+    destination:
+      selector: embargo == "true" 
+  - action: Pass

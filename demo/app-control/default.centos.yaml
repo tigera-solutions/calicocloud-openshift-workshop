@@ -1,0 +1,17 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: default.centos
+  namespace: dev
+spec:
+  tier: default
+  order: 800
+  selector: app == "centos"
+  serviceAccountSelector: ''
+  egress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        selector: app == "nginx"
+  types:
+    - Egress
