@@ -12,7 +12,7 @@ This is the workshop for Calicocloud demo in RedHat Openshift platform, includin
 The intent of this workshop is to educate any person working with OCP cluster in one way or another about Calico cloud features and how to use them. While there are many capabilities that Calico provides, this workshop focuses on a subset of those that are used most often by different types of technical users.
 
 
-## STEP 1 - Order a tigera demo cluster in [RedHat demo system](https://rhpds.redhat.com/catalog/explorer/) 
+## STEP 1 - Order a tigera demo cluster in RedHat demo system 
 
   - [WIP][OCP: Order a tigera demo cluster](modules/creating-demo-cluster.md)
 
