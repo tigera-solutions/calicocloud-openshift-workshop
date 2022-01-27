@@ -13,5 +13,12 @@ spec:
       protocol: TCP
       destination:
         selector: app == "nginx"
+    - action: Allow
+      protocol: UDP
+      source: {}
+      destination:
+        namespaceSelector: all()
+        ports:
+          - '5353'    
   types:
     - Egress
