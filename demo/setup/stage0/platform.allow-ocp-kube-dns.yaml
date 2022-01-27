@@ -1,0 +1,27 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: platform.allow-ocp-kube-dns
+spec:
+  tier: platform
+  order: 200
+  selector: projectcalico.org/namespace != "acme"
+  namespaceSelector: ''
+  serviceAccountSelector: ''
+  egress:
+    - action: Allow
+      source: {}
+      destination:
+        selector: k8s-app == "kube-dns"
+    - action: Allow
+      protocol: UDP
+      source: {}
+      destination:
+        namespaceSelector: projectcalico.org/namespace == "openshift-dns"
+        ports:
+          - '5353'
+  doNotTrack: false
+  applyOnForward: false
+  preDNAT: false
+  types:
+    - Egress

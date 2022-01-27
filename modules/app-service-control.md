@@ -90,24 +90,6 @@
     ```
 
 
-5. Implement explicitic policy to allow egress access from a workload in one namespace/pod, e.g. `dev/centos`, to `hipstershop/frontend`.
-
-    
-    a. Deploy egress policy between two namespaces `dev` and `hipstershop`.
-
-    ```bash
-    kubectl apply -f demo/app-control/platform.centos-to-frontend.yaml
-    ```
-
-    b. Test connectivity between `dev/centos` pod and `hipstershop/frontend` service again, should be allowed now.
-
-    ```bash
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
-    #output is HTTP/1.1 200 OK
-    ```
-
-    The access should be allowed once the egress policy is in place.
-
 
 > Now as we have proper policies in place, we can play around with `staged.default-deny` policy as a beta version to test your E-W control, for examle adding `default` namespace and curl the google, you should be able to see the deny flow under `staged.default-deny` policy, once you are happy with the results, you can using the `Policies Board` view in the Enterirpse Manager UI to enforce it as `default-deny` policy manifest. 
 
