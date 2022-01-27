@@ -23,33 +23,16 @@ IMPORTANT: In order to complete this module, you must have [Calico Cloud trial a
     Click on "connect cluster"
      ![connect-cluster](../img/connect-cluster.png)
 
-    choose your and click next, use aks as example
-      ![choose-aks](../img/choose-aks.png)
+    choose Red Hat OpenShift cluster, and choose the managed cluster name 
+      ![choose-ocp](../img/choose-ocp.png)
 
 
-    run installation script in your cluster. 
-    ```bash
-    # script should look similar to this
-    curl https://installer.calicocloud.io/xxxxxx_yyyyyyy-saay-management_install.sh | bash
-    ```
+    run installation script in your cluster, script should look similar to this.
+
+      ![installation script](../img/install-script.png)
 
     Joining the cluster to Calico Cloud can take a few minutes. Wait for the installation script to finish before you proceed to the next step.
 
-    You should see the output similar to this:
-
-     ![installation script](../img/install-script.png)
-
-    Set the Calico Cluster Name as a variable to use later in this workshop. The Cluster Name can also be obtained from the Calico Cloud Web UI at a later date. For the example above `CALICOCLUSTERNAME` should be set to __######-management-managed-#####__
-    
-    ```bash
-    export CALICOCLUSTERNAME=<Cluster Name>
-
-    #For Linux terminal
-    echo export CALICOCLUSTERNAME=$CALICOCLUSTERNAME | tee -a ~/.bash_profile
-
-    #For Mac terminal
-    echo export CALICOCLUSTERNAME=$CALICOCLUSTERNAME | tee -a ~/.zshrc 
-    ```
     
     Set the Elastic Index Name as a variable to use later in this workshop. The Index Name can also be obtained from `intrusion-detection-controller` or `compliance-controller` deployment. For example below, the `ELASTIC_INDEX_SUFFIX` should be set to __pkgr91xc.#####-management-managed-#####__
     
@@ -99,12 +82,6 @@ IMPORTANT: In order to complete this module, you must have [Calico Cloud trial a
     kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":"15s"}}'
     kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"15s"}}'
     kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
-    ```
-
-   > If you hit an error message of "iptablesBackend cannot be auto" for your RKE, use command below to remove this Field and value in spec.
-
-    ```bash
-    kubectl edit felixconfigurations default
     ```
 
 6. Configure Felix to collect TCP stats - this uses eBPF TC program and requires miniumum Kernel version of v5.3.0. Further [documentation](https://docs.tigera.io/visibility/elastic/flow/tcpstats)
