@@ -9,21 +9,19 @@
     a. Test connectivity between workloads within each namespace, use `dev` and `hipstershop` namespaces as example
 
     ```bash
-    # test connectivity within dev namespace, the expected result is "HTTP/1.1 200 OK"
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://nginx-svc 2>/dev/null | grep -i http'
+    # switch to hipstershop namespace
+    oc project hipstershop
     ```
 
     ```bash
-    # test connectivity within hipstershop namespace in 8080 port
-    kubectl -n hipstershop exec -it $(kubectl -n hipstershop get po -l app=frontend -ojsonpath='{.items[0].metadata.name}') \
-    -c server -- sh -c 'nc -zv recommendationservice 8080'
+    # test connectivity within hipstershop namespace in 8080 port, the expected result is "recommendationservice (x.x.x.x:8080) open"
+    kubectl exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}')  -c server -- sh -c 'nc -zv recommendationservice 8080'
     ```
 
     b. Test connectivity across namespaces `dev/centos`and `hipstershop/frontend`.
     ```bash
     # test connectivity from dev namespace to hipstershop namespace, the expected result is "HTTP/1.1 200 OK"
     kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
-
     ```
 
     c. Test connectivity from each namespace `dev` and `default` to the Internet.
@@ -33,7 +31,7 @@
     kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
     
     # test connectivity from default namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-    kubectl exec -it curl-demo -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
+    kubectl -n default exec -it curl-demo -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
     
     ```
 
@@ -65,19 +63,11 @@
 
 4. Test connectivity with policies in place.
 
-    a. The only connections between the components within namespaces `dev` are from `centos` to `nginx`, which should be allowed as configured by the policies.
-
-    ```bash
-    # test connectivity within dev namespace, the expected result is "HTTP/1.1 200 OK"
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://nginx-svc 2>/dev/null | grep -i http'
-    ```
-
-    The connections within namespace `hipstershop` should be allowed as usual.
+    a. The connections within namespace `hipstershop` should be allowed as usual.
 
     ```bash
     # test connectivity within hipstershop namespace in 8080 port
-    kubectl -n hipstershop exec -it $(kubectl -n hipstershop get po -l app=frontend -ojsonpath='{.items[0].metadata.name}') \
-    -c server -- sh -c 'nc -zv recommendationservice 8080'
+    kubectl exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}')  -c server -- sh -c 'nc -zv recommendationservice 8080'
     ```
 
     b. The connections across `dev/centos` pod and `hipstershop/frontend` pod should be blocked by the application policy.
@@ -96,7 +86,7 @@
 
     ```bash
     # test connectivity from default namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-    kubectl exec -it curl-demo -- sh -c 'curl -m3 -sI www.google.com 2>/dev/null | grep -i http'
+    kubectl -n default exec -it curl-demo -- sh -c 'curl -m3 -sI www.google.com 2>/dev/null | grep -i http'
     ```
 
 

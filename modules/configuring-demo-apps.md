@@ -4,7 +4,15 @@
 
 ## Steps
 
-1. Deploy policy tiers.
+1. Download this repo into your environment:
+
+    ```bash
+    git clone https://github.com/tigera-solutions/calicocloud-openshift-workshop.git
+
+    cd calicocloud-openshift-workshop
+    ```
+
+2. Deploy policy tiers.
 
     We are going to deploy some policies into policy tier to take advantage of hierarcical policy management.
 
