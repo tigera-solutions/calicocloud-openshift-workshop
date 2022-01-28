@@ -81,7 +81,8 @@
 
 5. . Confirm you are able to see the aler in alert list. 
    
-     ![alert list](../img/alert-list.png)
+     ![alert list](../img/alert-list1.png)
+     ![alert list](../img/alert-list2.png)
         
 
 [Next -> Manager UI](../modules/manager-ui.md)
