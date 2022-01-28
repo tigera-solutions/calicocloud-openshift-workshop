@@ -24,9 +24,6 @@
 
     ![policies board](../img/policies-board.png)
 
-    By leveraging stats controls you can toggle additional metrics to be listed for each shown policy.
-
-    ![policies board stats](../img/policies-board-stats.png)
 
 3. Audit timeline
 
@@ -38,7 +35,7 @@
 
     The `Endpoints` view lists all endpoints known to Calico. It includes all Kubernetes endpoints, such as Pods, as well as Host endpoints that can represent a Kubernetes host or an external VM or bare metal machine. We will elaborate host endpoints in later module.
 
-    ![endpoints view](../img/endpoints-view.png)
+    ![endpoints view](../img/endpoint-view.png)
 
 5. Service Graph
 
