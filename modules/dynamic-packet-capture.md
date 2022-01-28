@@ -7,45 +7,29 @@ Calico enterprise/cloud provide enhanced packet capture feature for DevOps troub
 
 # Steps
 
-## step 1. Capture all packet for nginx pods.
 
- 1. Initial packet capture job from manager UI. 
+ 1. Login `hipstershop` namespace from service graph. 
 
-  ![packet capture](../img/packet-capture-ui.png)
-
-
- 2. Schedule the packet capture job with specific port.
-
-  ![test packet capture](../img/test-packet-capture.png)
+  ![hipstershop](../img/hipstershop-ns.png)
 
 
- 3. You will see the job scheduled in service graph.
+ 2. Choose a mircroservice which you want to run the packet capture job. we will use frontend as example.
+
+  ![front end](../img/frontend-ms.png)
+
+
+ 3. We will schedule a packet capture job for TCP port 80 and 8080. 
 
 
   ![schedule packet capture](../img/schedule-packet-capture.png)
 
 
- 4. Download the pcap file once the job is `Capturing` or `Finished`. 
+ 4. You will notice that the pcap job is in `sheduled` mode now. 
    
-  ![download packet capture](../img/download-packet-capture.png)
-   
+  ![sheduled](../img/sheduled.png)
 
- 
-## step 2. Capture packet per protocol for example `TCP` and port `3550`.
 
- 1. Deploy packet capture definition to capture packets between `hipstershop/frontend` pod and `dev/netshoot` pod.
-
-   ```bash
-   kubectl apply -f demo/packet-capture/hipstershop-productcatalogservice-pcap.yaml
-   ```
-
- 2. Generate packet by running command:
-  
-   ```bash
-   for i in {1..20}; do kubectl -n dev exec netshoot -- nc -zv productcatalogservice.hipstershop 3550; sleep 2; done
-   ```
-
- 3. Fetch and review captured payload.
+ 5. Fetch and review captured payload.
 
   ![download packet capture](../img/download-packet-capture-2.png)
    

@@ -33,15 +33,20 @@ For more details refer to [Configure L7 logs](https://docs.tigera.io/v3.11/visib
    kubectl create -f configs/alr7.yaml
    ```
 
+3. Confirm the daemonset is running for each node.
 
-6. Select traffic for L7 log collection
+   ```bash
+   kubectl get daemonset.apps/l7-log-collector  -n calico-system
+   ``` 
+
+4. Select traffic for L7 log collection
 
    ```bash
    #Annotate the services you wish to collect L7 logs as shown. Use hipstershop as example
    kubectl annotate svc --all -n hipstershop projectcalico.org/l7-logging=true
    ```
    
-7. *[Optional]* restart the pods in `hipstershop` if you want to see l7 logs right away.    
+5. *[Optional]* restart the pods in `hipstershop` if you want to see l7 logs right away.    
 
     ```bash
     kubectl delete pods --all -n hipstershop
