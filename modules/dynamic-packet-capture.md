@@ -29,13 +29,11 @@ Calico enterprise/cloud provide enhanced packet capture feature for DevOps troub
   ![sheduled](../img/sheduled.png)
 
 
- 5. Fetch and review captured payload.
+ 5. Download packet capture once it's `Finished` or start `Capturing`. You can also download yaml file for this pcap job. 
 
-  ![download packet capture](../img/download-packet-capture-2.png)
+  ![download packet capture](../img/download-packet-capture.png)
+
    
- 4. Stop packet capture
-  
-  ![stop packet capture](../img/stop-packet-capture.png)
 
 
 ## *[Bonus]* Calicocloud provide different RBAC role for packet capture resource. 
