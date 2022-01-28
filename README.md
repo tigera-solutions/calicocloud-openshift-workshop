@@ -40,7 +40,7 @@ In this workshop we are going to focus on these main use cases:
 - **North-South Controls: DNS Egress Controls**
 - **Observability: Dynamic Service Graph & Kibana dashboard**
 
-## Charpter A - Beginner
+## Use cases
 
 - [East-West: controls-App service control](modules/app-service-control.md)
 - [East-West: controls-Pod microsegmentation](modules/pod-microsegmentation.md)
@@ -50,8 +50,9 @@ In this workshop we are going to focus on these main use cases:
 - [Observability: Calico Manager UI](modules/manager-ui.md)
 - [Observability: Kibana dashboard](modules/kibana-dashboard.md)
 - [Observability: L7 visibility](modules/enable-l7-visibility.md) 
+- [Observability: Dynamic packet capture](modules/dynamic-packet-capture.md) 
 
-## Charpter B - Intermediate
+
 
 
 ## STEP 6 - Clean up your test environment
