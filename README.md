@@ -53,8 +53,6 @@ In this workshop we are going to focus on these main use cases:
 - [Observability: Dynamic packet capture](modules/dynamic-packet-capture.md) 
 
 
-
-
 ## STEP 6 - Clean up your test environment
 
 - [clean up](modules/clean-up.md)
