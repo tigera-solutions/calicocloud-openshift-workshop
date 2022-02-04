@@ -15,23 +15,25 @@
 
     ```bash
     # test connectivity within hipstershop namespace in 8080 port, the expected result is "recommendationservice (x.x.x.x:8080) open"
-    kubectl exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}')  -c server -- sh -c 'nc -zv recommendationservice 8080'
+    oc exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}')  -c server -- sh -c 'nc -zv recommendationservice 8080'
     ```
 
     b. Test connectivity across namespaces `dev/centos`and `hipstershop/frontend`.
     ```bash
     # test connectivity from dev namespace to hipstershop namespace, the expected result is "HTTP/1.1 200 OK"
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
+    oc project dev
+    oc exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
     ```
 
     c. Test connectivity from each namespace `dev` and `default` to the Internet.
 
     ```bash
     # test connectivity from dev namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
     
     # test connectivity from default namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-    kubectl -n default exec -it curl-demo -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
+    oc project default
+    oc exec -it curl-demo -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
     
     ```
 
@@ -40,7 +42,7 @@
     >Staged `default-deny` policy is a good way of catching any traffic that is not explicitly allowed by a policy without explicitly blocking it. We only include `dev` and `hipstershop` namespace here as example, and you can add more namespace in `default-deny` policy when you moving to "zero-trust" day by day.
 
     ```bash
-    kubectl apply -f demo/app-control/staged.default-deny.yaml
+    oc apply -f demo/app-control/staged.default-deny.yaml
     ```
 
     You should be able to view the potential affect of the staged `default-deny` policy if you navigate to the `Dashboard` view in the Enterprise Manager UI and look at the `Packets by Policy` histogram.
@@ -56,7 +58,7 @@
 
     ```bash
     # deploy policy to control centos ingress and egress
-    kubectl apply -f demo/app-control/default.centos.yaml
+    oc apply -f demo/app-control/default.centos.yaml
 
     ```
 
@@ -67,13 +69,15 @@
 
     ```bash
     # test connectivity within hipstershop namespace in 8080 port
-    kubectl exec -it $(kubectl get po -l app=frontend -ojsonpath='{.items[0].metadata.name}')  -c server -- sh -c 'nc -zv recommendationservice 8080'
+    oc project hipstershop
+    oc exec -it $(oc get po -l app=frontend -ojsonpath='{.items[0].metadata.name}')  -c server -- sh -c 'nc -zv recommendationservice 8080'
     ```
 
     b. The connections across `dev/centos` pod and `hipstershop/frontend` pod should be blocked by the application policy.
     ```bash
     # test connectivity from dev namespace to hipstershop namespace, the expected result is "command terminated with exit code 1"
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
+    oc project dev
+    oc exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
 
     ```
 
@@ -81,12 +85,13 @@
 
     ```bash
     # test connectivity from dev namespace to the Internet, the expected result is "command terminated with exit code 1"
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -sI http://www.google.com 2>/dev/null | grep -i http'
     ```
 
     ```bash
     # test connectivity from default namespace to the Internet, the expected result is "HTTP/1.1 200 OK"
-    kubectl -n default exec -it curl-demo -- sh -c 'curl -m3 -sI www.google.com 2>/dev/null | grep -i http'
+    oc project default
+    oc exec -it curl-demo -- sh -c 'curl -m3 -sI www.google.com 2>/dev/null | grep -i http'
     ```
     
 5. Implement explicitic policy to allow egress access from a workload in one namespace/pod, e.g. `dev/centos`, to `hipstershop/frontend`.
@@ -95,13 +100,14 @@
     a. Deploy egress policy between two namespaces `dev` and `hipstershop`.
 
     ```bash
-    kubectl apply -f demo/app-control/platform.centos-to-frontend.yaml
+    oc apply -f demo/app-control/platform.centos-to-frontend.yaml
     ```
 
     b. Test connectivity between `dev/centos` pod and `hipstershop/frontend` service again, should be allowed now.
 
     ```bash
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
+    oc project dev
+    oc exec -t centos -- sh -c 'curl -m3 -sI http://frontend.hipstershop 2>/dev/null | grep -i http'
     #output is HTTP/1.1 200 OK
     ```
 

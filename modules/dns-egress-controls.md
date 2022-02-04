@@ -10,14 +10,15 @@
 
     ```bash
     # deploy dns policy
-    kubectl apply -f demo/dns-egress-control/dns-policy.yaml
+    oc apply -f demo/dns-egress-control/dns-policy.yaml
     ```
 
     ```bash
     # test egress access to api.twilio.com
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -skI https://api.twilio.com 2>/dev/null | grep -i http'
+    oc project dev
+    oc exec -t centos -- sh -c 'curl -m3 -skI https://api.twilio.com 2>/dev/null | grep -i http'
     # test egress access to www.google.com
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
     ```
 
     Access to the `api.twilio.com` endpoint should be allowed by the DNS policy and any other external endpoints like `www.google.com` should be denied.
@@ -26,7 +27,7 @@
 
     ```bash
     # test egress access to www.google.com again and it should be allowed.
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
     ```
 
 2. Edit the policy to use a `NetworkSet` with DNS domain instead of inline DNS rule.
@@ -35,16 +36,16 @@
 
     ```bash
     # deploy network set
-    kubectl apply -f demo/dns-egress-control/netset.allowed-dns.yaml
+    oc apply -f demo/dns-egress-control/netset.allowed-dns.yaml
     # deploy DNS policy using the network set
-    kubectl apply -f demo/dns-egress-control/dns-policy.netset.yaml
+    oc apply -f demo/dns-egress-control/dns-policy.netset.yaml
     ```
 
     ```bash
     # test egress access to api.twilio.com
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -skI https://api.twilio.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -skI https://api.twilio.com 2>/dev/null | grep -i http'
     # test egress access to www.google.com
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
     ```
 
     b. Modify the `NetworkSet` to include `www.google.com` in dns domain and test egress access to www.google.com again.
@@ -53,7 +54,7 @@
 
     ```bash
     # test egress access to www.google.com again and it should be allowed.
-    kubectl -n dev exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
+    oc exec -t centos -- sh -c 'curl -m3 -skI https://www.google.com 2>/dev/null | grep -i http'
     ```
 
 [Next -> Global threadfeed](../modules/global-threadfeed.md)

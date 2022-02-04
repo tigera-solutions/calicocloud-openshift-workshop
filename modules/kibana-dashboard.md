@@ -13,7 +13,6 @@
     Calico provide Some of the default dashboards you get access to, including are DNS Logs, Flow Logs, Audit Logs, Kuernetes API calls, L7 HTTP metrics etc, and you can also customernize different dashboard. 
 
 
-
 2. DNS dashboards   
 
     The `DNS` dashboard will give you a general idea about how DNS behave in your cluster, including internal & external queries, also DNS latency as it shows below.
@@ -35,7 +34,6 @@
     The `ee flow log` dashboard will give you all details related to every flow logs including deny & allow action and the reporter, you can find out kubernetes context as well while expand each flow logs.
 
      ![kibana flow logs](../img/kibana-flow-logs.png)
-
 
 
 

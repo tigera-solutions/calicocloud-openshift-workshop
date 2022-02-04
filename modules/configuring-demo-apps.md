@@ -17,7 +17,7 @@
     We are going to deploy some policies into policy tier to take advantage of hierarcical policy management.
 
     ```bash
-    kubectl apply -f demo/setup/tiers/
+    oc apply -f demo/setup/tiers/
     ```
     This will add tiers `security`, and `platform` to the Calico cluster.
     
@@ -27,23 +27,23 @@
     In order to explicitly allow workloads to connect to the Kubernetes DNS component, we are going to implement a policy that controls such traffic. We also deploy allow policy for logging and contraint for PCI compliance.
 
     ```bash
-    kubectl apply -f demo/setup/stage0/
+    oc apply -f demo/setup/stage0/
     ```
 
 3. Deploy demo applications.
 
     ```bash
     #deploy dev app stack
-    kubectl apply -f demo/setup/dev
+    oc apply -f demo/setup/dev
     
     #deploy acme app stack
-    kubectl apply -f demo/setup/acme
+    oc apply -f demo/setup/acme
 
     #deploy storefront app stack
-    kubectl apply -f demo/setup/storefront
+    oc apply -f demo/setup/storefront
 
     #deploy hipstershop app stack
-    kubectl apply -f demo/setup/hipstershop
+    oc apply -f demo/setup/hipstershop
     ```
 
    
@@ -53,8 +53,8 @@
     >The compliance reports will be needed for one of a later lab, is cronjob in your cluster, you can change the schedule by edit it.
 
     ```bash
-    kubectl apply -f demo/compliance-reports/cis-benchmark-report.yaml
-    kubectl apply -f demo/compliance-reports/cluster-reports.yaml
+    oc apply -f demo/compliance-reports/cis-benchmark-report.yaml
+    oc apply -f demo/compliance-reports/cluster-reports.yaml
     ```
 
 5. Deploy global alerts.
@@ -62,16 +62,16 @@
     >The alerts will be explored in a later lab.
 
     ```bash
-    kubectl apply -f demo/alerts/
+    oc apply -f demo/alerts/
    
     ```
 
 6. Confirm the global compliance report and global alert are running.
     
     ```bash
-    kubectl get globalreport
+    oc get globalreport
 
-    kubectl get globalalert
+    oc get globalalert
    
     ``` 
 

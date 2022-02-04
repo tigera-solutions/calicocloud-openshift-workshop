@@ -36,7 +36,7 @@ IMPORTANT: In order to complete this module, you must have [Calico Cloud trial a
     
     In calico cloud management UI, you can see your own cluster added in "managed cluster", you can also confirm by
     ```bash
-    kubectl get tigerastatus
+    oc get tigerastatus
     ```
     
     ```bash
@@ -59,9 +59,9 @@ IMPORTANT: In order to complete this module, you must have [Calico Cloud trial a
 5. Configure log aggregation and flush intervals, we will use 15s instead of default value 300s for lab testing only.   
 
     ```bash
-    kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":"15s"}}'
-    kubectl patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"15s"}}'
-    kubectl patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
+    oc patch felixconfiguration.p default -p '{"spec":{"flowLogsFlushInterval":"15s"}}'
+    oc patch felixconfiguration.p default -p '{"spec":{"dnsLogsFlushInterval":"15s"}}'
+    oc patch felixconfiguration.p default -p '{"spec":{"flowLogsFileAggregationKindForAllowed":1}}'
     ```
 
 6. Configure Felix to collect TCP stats - this uses eBPF TC program and requires miniumum Kernel version of v5.3.0. Further [documentation](https://docs.tigera.io/visibility/elastic/flow/tcpstats)
@@ -69,7 +69,7 @@ IMPORTANT: In order to complete this module, you must have [Calico Cloud trial a
    >Calico Cloud/Enterprise can collect additional TCP socket statistics. While this feature is available in both iptables and eBPF dataplane modes, it uses eBPF to collect the statistics. Therefore it requires a recent Linux kernel (at least v5.3.0/v4.18.0-193 for RHEL).
 
     ```bash
-    kubectl patch felixconfiguration default -p '{"spec":{"flowLogsCollectTcpStats":true}}'
+    oc patch felixconfiguration default -p '{"spec":{"flowLogsCollectTcpStats":true}}'
     ```
 
     

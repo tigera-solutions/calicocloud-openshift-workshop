@@ -3,11 +3,10 @@
 1. Delete application stack to clean up any `loadbalancer` services.
 
     ```bash
-    kubectl delete -f demo/setup/dev
-    kubectl delete -f demo/setup/acme
-    kubectl delete -f demo/setup/storefront
-    kubectl delete -f demo/setup/hipstershop/
-    kubectl delete ns yaobank
+    oc delete -f demo/setup/dev
+    oc delete -f demo/setup/acme
+    oc delete -f demo/setup/storefront
+    oc delete -f demo/setup/hipstershop/
     ```
 
 2. Remove calicocloud components from your cluster.
