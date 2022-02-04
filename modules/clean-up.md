@@ -31,7 +31,11 @@
    
    ```   
 
-3. Delete your managed cluster.
+3. Logout your managed cluster.
+
+   ```bash
+   oc logout
+   ```
 
    [Menu](../README.md)
    
