@@ -5,23 +5,12 @@ metadata:
 spec:
   # requires security tier
   tier: security
-  selector: (app == "centos" && projectcalico.org/namespace == "dev")
+  selector: '(app == "centos" && projectcalico.org/namespace == "dev")||(app == "microservice2" && projectcalico.org/namespace == "storefront")'
   order: 200
   types:
     - Egress
   egress:
   - action: Allow
-    protocol: UDP
-    source: {}
-    destination:
-      ports:
-      - '53'
-  - action: Allow
-    source:
-      selector: app == 'centos'
     destination:
       domains:
       - '*.twilio.com'
-  - action: Pass
-    source: {}
-    destination: {}

@@ -39,7 +39,7 @@ spec:
   - name: centos
     image: centos:latest
     command: [ "/bin/bash", "-c", "--" ]
-    args: [ "while true; do curl -m3 http://nginx-svc; sleep 3; done;" ]
+    args: [ "while true; do sleep 3; done;" ]
     resources: {}
 
 ---
@@ -58,3 +58,47 @@ spec:
     command: [ "/bin/bash", "-c", "--" ]
     args: [ "while true; do curl -m3 http://nginx-svc; sleep 3; done;" ]
     resources: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+        security: strict
+    spec:
+      containers:
+      - name: nginx
+        # for OpenShift use nginxinc/nginx-unprivileged
+        image: nginxinc/nginx-unprivileged
+        ports:
+        # nginxinc/nginx-unprivileged port is 8080
+        - containerPort: 8080
+        resources: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  namespace: dev
+  labels:
+    svc: nginx
+spec:
+  ports:
+  - port: 80
+    # nginxinc/nginx-unprivileged port is 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: nginx
+  type: ClusterIP

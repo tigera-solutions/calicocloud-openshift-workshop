@@ -12,4 +12,3 @@ spec:
   - action: Deny
     destination:
       selector: embargo == "true" 
-  - action: Pass

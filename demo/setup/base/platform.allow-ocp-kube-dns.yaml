@@ -6,22 +6,15 @@ spec:
   tier: platform
   order: 200
   selector: projectcalico.org/namespace != "acme"
-  namespaceSelector: ''
-  serviceAccountSelector: ''
+  # selector: all()
   egress:
     - action: Allow
-      source: {}
       destination:
         selector: k8s-app == "kube-dns"
     - action: Allow
       protocol: UDP
-      source: {}
       destination:
-        namespaceSelector: projectcalico.org/namespace == "openshift-dns"
         ports:
           - '5353'
-  doNotTrack: false
-  applyOnForward: false
-  preDNAT: false
   types:
     - Egress

@@ -13,4 +13,3 @@ spec:
   - action: Deny
     destination:
       selector: threatfeed == "feodo"||threatfeed == "snort"
-  - action: Pass

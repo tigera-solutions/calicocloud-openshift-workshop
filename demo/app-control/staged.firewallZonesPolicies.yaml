@@ -1,5 +1,5 @@
 apiVersion: projectcalico.org/v3
-kind: NetworkPolicy
+kind: StagedNetworkPolicy
 metadata:
   name: application.restricted
   namespace: storefront
@@ -28,7 +28,7 @@ spec:
     - Egress
 ---
 apiVersion: projectcalico.org/v3
-kind: NetworkPolicy
+kind: StagedNetworkPolicy
 metadata:
   name: application.dmz
   namespace: storefront
@@ -58,7 +58,7 @@ spec:
     - Egress
 ---
 apiVersion: projectcalico.org/v3
-kind: NetworkPolicy
+kind: StagedNetworkPolicy
 metadata:
   name: application.trusted
   namespace: storefront
